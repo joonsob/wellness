@@ -3,29 +3,327 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign up</title>
+    <title>Log In</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .wrapper {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            padding: 30px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            transition: border-color 0.3s;
+            font-size: 16px;
+        }
+
+        .form-group input:focus {
+            border-color: #4285f4;
+            outline: none;
+        }
+
+        .form-group input::placeholder {
+            color: #aaa;
+        }
+
+        .error-message {
+            color: #d93025;
+            font-size: 12px;
+            margin-top: 5px;
+            visibility: hidden;
+        }
+
+        .form-group.error input {
+            border-color: #d93025;
+        }
+
+        .form-group.error .error-message {
+            visibility: visible;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 38px;
+            cursor: pointer;
+            color: #666;
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 15px;
+        }
+
+        button:hover {
+            background-color: #3367d6;
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+        }
+
+        .remember-me input {
+            margin-right: 5px;
+        }
+
+        .forgot-password {
+            color: #4285f4;
+            text-decoration: none;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .signup-link a {
+            color: #4285f4;
+            text-decoration: none;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+
+        .social-login {
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .social-login p {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .social-login p::before,
+        .social-login p::after {
+            content: "";
+            display: inline-block;
+            width: 40%;
+            height: 1px;
+            background-color: #ddd;
+            position: absolute;
+            top: 50%;
+        }
+
+        .social-login p::before {
+            left: 0;
+        }
+
+        .social-login p::after {
+            right: 0;
+        }
+
+        .social-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .social-button {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .social-button:hover {
+            background-color: #f5f5f5;
+        }
+
+        .social-icon {
+            font-size: 20px;
+            color: #555;
+        }
+    </style>
 </head>
 <body>
     <div class="wrapper">
-        <h1>Signup</h1>
-        <form>
-            <div>
-                <label for="firstname-input">
-                    
-                </label>
-                <input required type="text" name="firstname" id="firstname-input" placeholder="Firstname">
+        <h1>Log In</h1>
+        <form id="login-form">
+            <div class="form-group">
+                <label for="email-input">Email</label>
+                <input required type="email" name="email" id="email-input" placeholder="Enter your email address">
+                <div class="error-message" id="email-error">Please enter a valid email address</div>
             </div>
-            <div>
-                <input required type="email" name="email" id="email-input" placeholder="Email">
+            
+            <div class="form-group">
+                <label for="password-input">Password</label>
+                <input required type="password" name="password" id="password-input" placeholder="Enter your password">
+                <span class="password-toggle" id="toggle-password">Show</span>
+                <div class="error-message" id="password-error">Please enter your password</div>
             </div>
-            <div>
-                <input required type="password" name="password" id="password-input" placeholder="Password">
+            
+            <div class="remember-forgot">
+                <div class="remember-me">
+                    <input type="checkbox" id="remember" name="remember">
+                    <label for="remember">Remember me</label>
+                </div>
+                <a href="forgot-password.html" class="forgot-password">Forgot password?</a>
             </div>
-            <div>
-                <input required type="password" name="repeat-password" id="repeat-password-input" placeholder="Repeat Password">
+            
+            <button type="submit">Log In</button>
+            
+            <div class="signup-link">
+                Don't have an account? <a href="signup.html">Sign up</a>
             </div>
-            <button type="submit">Sign up</button>
+            
+            <div class="social-login">
+                <p>or continue with</p>
+                <div class="social-buttons">
+                    <div class="social-button" aria-label="Login with Google">
+                        <span class="social-icon">G</span>
+                    </div>
+                    <div class="social-button" aria-label="Login with Facebook">
+                        <span class="social-icon">f</span>
+                    </div>
+                    <div class="social-button" aria-label="Login with Apple">
+                        <span class="social-icon">&#63743;</span>
+                    </div>
+                </div>
+            </div>
         </form>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('login-form');
+            const emailInput = document.getElementById('email-input');
+            const passwordInput = document.getElementById('password-input');
+            const togglePassword = document.getElementById('toggle-password');
+            
+            // Toggle password visibility
+            togglePassword.addEventListener('click', function() {
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    togglePassword.textContent = 'Hide';
+                } else {
+                    passwordInput.type = 'password';
+                    togglePassword.textContent = 'Show';
+                }
+            });
+            
+            // Form validation
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                let isValid = true;
+                
+                // Email validation
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(emailInput.value)) {
+                    setError(emailInput, 'email-error', 'Please enter a valid email address');
+                    isValid = false;
+                } else {
+                    clearError(emailInput, 'email-error');
+                }
+                
+                // Password validation
+                if (passwordInput.value.trim() === '') {
+                    setError(passwordInput, 'password-error', 'Please enter your password');
+                    isValid = false;
+                } else {
+                    clearError(passwordInput, 'password-error');
+                }
+                
+                if (isValid) {
+                    // Submit the form - in a real app you'd handle this with AJAX or form submission
+                    alert('Login successful!');
+                    // Redirect to dashboard or home page
+                    // window.location.href = 'dashboard.html';
+                }
+            });
+            
+            function setError(input, errorId, message) {
+                const errorElement = document.getElementById(errorId);
+                errorElement.textContent = message;
+                input.parentElement.classList.add('error');
+            }
+            
+            function clearError(input, errorId) {
+                const errorElement = document.getElementById(errorId);
+                input.parentElement.classList.remove('error');
+            }
+
+            // Demo only: Fill in email for testing
+            // Remove this in production
+            if (window.location.search.includes('demo')) {
+                emailInput.value = 'demo@example.com';
+                passwordInput.value = 'password123';
+            }
+        });
+    </script>
 </body>
 </html>
